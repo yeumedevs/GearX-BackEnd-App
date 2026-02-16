@@ -1,0 +1,1205 @@
+{
+	"info": {
+		"_postman_id": "d54e5ec2-b41f-433a-9fa0-c19b52573d68",
+		"name": "GerarX - feature",
+		"description": "Postman collection for Brand, Category, Product APIs on http://localhost:8080/api/v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44267440"
+	},
+	"item": [
+		{
+			"name": "Brand",
+			"item": [
+				{
+					"name": "Brand - Insert",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Apple\",\n  \"description\": \"Premium brand\",\n  \"isActive\": 1,\n  \"createdBy\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/brand/insert",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"brand",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand - Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Updated desc\",\n  \"updatedBy\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/brand/update/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"brand",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand - Get by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/brand/get/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"brand",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand - Search (pageable)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzU4NjA1OTI1LCJleHAiOjE3NTg2Nzc5MjUsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.rbZe7UsV4hDDdjFusUDyQwijL-8ayTXzaucLdlU6WYY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/brand/search?q=ap&active=true&page=1&size=20&sortBy=created_at&dir=desc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"brand",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "ap"
+								},
+								{
+									"key": "active",
+									"value": "true"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "sortBy",
+									"value": "created_at"
+								},
+								{
+									"key": "dir",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand - Soft Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/brand/delete/1?updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"brand",
+								"delete",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand - Restore",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/brand/restore/1?updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"brand",
+								"restore",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand - Update Active",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/brand/active/1?value=1&updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"brand",
+								"active",
+								"1"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "1"
+								},
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand - Exists by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/brand/exists?name=Apple",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"brand",
+								"exists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Apple"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Category - Insert",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Phone\",\n  \"description\": \"Phone category\",\n  \"isActive\": 1,\n  \"createdBy\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/category/insert",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category - Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Updated desc\",\n  \"updatedBy\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/category/update/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category - Get by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/get/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category - Search (pageable)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzU4NjA1OTI1LCJleHAiOjE3NTg2Nzc5MjUsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.rbZe7UsV4hDDdjFusUDyQwijL-8ayTXzaucLdlU6WYY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/search?q=ph&active=true&page=1&size=20&sortBy=created_at&dir=desc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "ph"
+								},
+								{
+									"key": "active",
+									"value": "true"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "sortBy",
+									"value": "created_at"
+								},
+								{
+									"key": "dir",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category - Soft Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/delete/1?updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"delete",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category - Restore",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/restore/1?updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"restore",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category - Update Active",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/active/1?value=1&updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"active",
+								"1"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "1"
+								},
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category - Exists by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/exists?name=Phone",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"exists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Phone"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Product - Insert (minimal)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"iPhone 15 Pro 128GB\",\n  \"brandId\": 1,\n  \"categoryId\": 1,\n  \"price\": 27990000,\n  \"currencyCode\": \"VND\",\n  \"stockQuantity\": 50,\n  \"isActive\": 1,\n  \"createdBy\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/product/insert",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"price\": 26990000,\n  \"stockQuantity\": 40,\n  \"updatedBy\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/product/update/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Get by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/get/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Search (pageable)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzYwNzE2MjI1LCJleHAiOjE3NjA3ODgyMjUsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.LMkjf9b4V43QQqWnDqs4YqF1KZSBY7_dD6IrfX-elDI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/search?page=1&size=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Search by Brand (pageable)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzU4NjA1OTI1LCJleHAiOjE3NTg2Nzc5MjUsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.rbZe7UsV4hDDdjFusUDyQwijL-8ayTXzaucLdlU6WYY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/search/brand/4?q=pro&active=true&hasStock=true&page=1&size=12&sortBy=price&dir=asc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"search",
+								"brand",
+								"4"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "pro"
+								},
+								{
+									"key": "active",
+									"value": "true"
+								},
+								{
+									"key": "hasStock",
+									"value": "true"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "12"
+								},
+								{
+									"key": "sortBy",
+									"value": "price"
+								},
+								{
+									"key": "dir",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Search by Category (pageable)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzYwNzE2MjI1LCJleHAiOjE3NjA3ODgyMjUsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.LMkjf9b4V43QQqWnDqs4YqF1KZSBY7_dD6IrfX-elDI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/search/category/1?q=pro&active=true&hasStock=true&page=1&size=12&sortBy=created_at&dir=desc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"search",
+								"category",
+								"1"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "pro"
+								},
+								{
+									"key": "active",
+									"value": "true"
+								},
+								{
+									"key": "hasStock",
+									"value": "true"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "12"
+								},
+								{
+									"key": "sortBy",
+									"value": "created_at"
+								},
+								{
+									"key": "dir",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Soft Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/delete/1?updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"delete",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Restore",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/restore/1?updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"restore",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Update Active",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/active/1?value=1&updatedBy=admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"active",
+								"1"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "1"
+								},
+								{
+									"key": "updatedBy",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Exists by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/exists?name=iPhone 15 Pro 128GB",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"exists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "iPhone 15 Pro 128GB"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Upload img main",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzU5NzU3ODYzLCJleHAiOjE3NTk4Mjk4NjMsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.QCQ2BKzokvPjlRpXj2mxGAVn16DEvT6U8WXLtPtsh9c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/minhg/OneDrive/Pictures/Screenshots/Screenshot 2024-12-17 203637.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/product/1/images/main",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"1",
+								"images",
+								"main"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product - Upload img gallery",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzU5NzU3ODYzLCJleHAiOjE3NTk4Mjk4NjMsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.QCQ2BKzokvPjlRpXj2mxGAVn16DEvT6U8WXLtPtsh9c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/minhg/OneDrive/Pictures/Screenshots/Screenshot 2024-12-17 203637.png"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/minhg/OneDrive/Pictures/Screenshots/Screenshot 2024-12-17 203637.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/product/1/images",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"1",
+								"images"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Cart - Search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzYwNzE2MjI1LCJleHAiOjE3NjA3ODgyMjUsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.LMkjf9b4V43QQqWnDqs4YqF1KZSBY7_dD6IrfX-elDI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cart?page=1&size=20&userId=3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "q",
+									"value": "iphone",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "price",
+									"disabled": true
+								},
+								{
+									"key": "dir",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cart - Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzYwMzc2NzU2LCJleHAiOjE3NjA0NDg3NTYsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.IdqWcwPiXV0tok_KvYJFmjUor3DtZI0xsexjHk9mQeU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"productId\": 1, \r\n    \"quantity\": 2 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cart/items?userId=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart",
+								"items"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cart - Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzYwMzc2NzU2LCJleHAiOjE3NjA0NDg3NTYsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.IdqWcwPiXV0tok_KvYJFmjUor3DtZI0xsexjHk9mQeU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"itemId\": 6,\r\n    \"quantity\": 3 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cart/items/qty?userId=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart",
+								"items",
+								"qty"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cart - Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzYwMzc2NzU2LCJleHAiOjE3NjA0NDg3NTYsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.IdqWcwPiXV0tok_KvYJFmjUor3DtZI0xsexjHk9mQeU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cart/items/8?userId=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart",
+								"items",
+								"8"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cart - Clear",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzYwMzc2NzU2LCJleHAiOjE3NjA0NDg3NTYsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.IdqWcwPiXV0tok_KvYJFmjUor3DtZI0xsexjHk9mQeU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"itemId\": 5,\r\n    \"quantity\": 3 \r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cart/clear?userId=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart",
+								"clear"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cart - Total",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHZWFyWCIsInN1YiI6InRlc3R1c2VyIiwiaWF0IjoxNzYwMzc2NzU2LCJleHAiOjE3NjA0NDg3NTYsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.IdqWcwPiXV0tok_KvYJFmjUor3DtZI0xsexjHk9mQeU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"itemId\": 5,\r\n    \"quantity\": 3 \r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cart/totals?userId=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cart",
+								"totals"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Media",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/api/v1/media",
+							"path": [
+								"api",
+								"v1",
+								"media"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080/api/v1",
+			"type": "string"
+		}
+	]
+}

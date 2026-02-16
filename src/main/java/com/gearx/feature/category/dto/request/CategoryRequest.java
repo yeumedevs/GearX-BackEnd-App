@@ -1,6 +1,6 @@
 package com.gearx.feature.category.dto.request;
 
-import com.gearx.common.model.BaseEntity;
+import com.gearx.common.base.model.BaseEntity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

@@ -57,6 +57,8 @@ public class ApiConstants {
         public static final String BASE = VERSION_V1 + "/product";
         public static final String INSERT = "/insert";
         public static final String UPDATE = "/update/{id}";
+        public static final String UPDATE_MAIN_IMG = "/{id}/images/main";
+        public static final String UPDATE_GALLERY = "/{id}/images";
         public static final String GET_BY_ID = "/get/{id}";
         public static final String SEARCH_PAGEABLE = "/search";
         public static final String SEARCH_BY_BRAND_PAGE = "/search/brand/{brandId}";
@@ -66,5 +68,16 @@ public class ApiConstants {
         public static final String ACTIVE = "/active/{id}";
 
         private Product() {}
+    }
+
+    public static final class Cart {
+        public static final String BASE = VERSION_V1 + "/cart";
+        public static final String ITEMS = "/items";
+        public static final String UPDATE_QTY = "/items/quantity";
+        public static final String ITEMS_BY_ID = "/items/{itemId}";
+        public static final String CLEAR = "/clear";
+        public static final String TOTALS = "/totals";
+
+        private Cart() {}
     }
 }

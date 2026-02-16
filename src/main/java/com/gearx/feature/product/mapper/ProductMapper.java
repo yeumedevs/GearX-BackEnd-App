@@ -15,6 +15,16 @@ public interface ProductMapper {
 
     int updateById(Product product);
 
+    int updateMainImage(
+            @Param("productId") Long productId,
+            @Param("mainImageUrl") String mainImageUrl,
+            @Param("updatedBy") Integer updatedBy);
+
+    int updateGallery(
+            @Param("productId") Long productId,
+            @Param("imageUrls") List<String> imageUrls,
+            @Param("updatedBy") Integer updatedBy);
+
     Product findById(@Param("productId") Integer productId);
 
     int softDeleteById(@Param("productId") Integer productId, @Param("updatedBy") String updatedBy);

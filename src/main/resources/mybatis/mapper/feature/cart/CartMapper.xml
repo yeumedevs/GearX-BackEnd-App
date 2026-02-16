@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gearx.feature.cart.mapper.CartMapper">
+
+    <!-- Kết quả ánh xạ về entity -->
+    <resultMap id="CartResult" type="com.gearx.feature.cart.entity.Cart">
+        <id     column="id"         property="id"/>
+        <result column="user_id"    property="userId"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <resultMap id="CartItemResult" type="com.gearx.feature.cart.entity.CartItem">
+        <id     column="id"         property="id"/>
+        <result column="cart_id"    property="cartId"/>
+        <result column="product_id" property="productId"/>
+        <result column="quantity"   property="quantity"/>
+    </resultMap>
+
+    <!-- Kết quả ánh xạ về response -->
+    <resultMap id="CartItemRespResult" type="com.gearx.feature.cart.dto.response.CartItemResponse">
+        <id     column="id"             property="id"/>
+        <result column="product_id"     property="productId"/>
+        <result column="name"           property="name"/>
+        <result column="main_image_url" property="mainImageUrl"/>
+        <result column="price"          property="price"/>
+        <result column="quantity"       property="quantity"/>
+        <result column="sub_total"      property="subTotal"/>
+    </resultMap>
+
+    <!-- Cart -->
+    <select id="findCartByUserId" parameterType="int" resultMap="CartResult">
+        SELECT id, user_id, created_at, updated_at
+        FROM carts
+        WHERE user_id = #{userId}
+        LIMIT 1
+    </select>
+
+    <insert id="createCart" parameterType="com.gearx.feature.cart.entity.Cart"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO carts (user_id, created_at, updated_at)
+        VALUES (#{userId}, now(), now())
+    </insert>
+
+    <!-- Items CRUD -->
+    <select id="findItemById" parameterType="int" resultMap="CartItemResult">
+        SELECT id, cart_id, product_id, quantity
+        FROM cart_items
+        WHERE id = #{id} LIMIT 1
+    </select>
+
+    <select id="existsUser" parameterType="int" resultType="boolean">
+        SELECT EXISTS(
+        SELECT 1
+        FROM "user"               -- bảng của bạn là "user" (đang được quote vì từ khóa)
+        WHERE user_id = #{userId} -- cột FK đang tham chiếu
+        LIMIT 1
+        )
+    </select>
+
+    <select id="findItemByCartAndProduct" resultMap="CartItemResult">
+        SELECT id, cart_id, product_id, quantity
+        FROM cart_items
+        WHERE cart_id = #{cartId} AND product_id = #{productId}
+        LIMIT 1
+    </select>
+
+    <insert id="insertItem" parameterType="com.gearx.feature.cart.entity.CartItem"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO cart_items (cart_id, product_id, quantity)
+        VALUES (#{cartId}, #{productId}, #{quantity})
+    </insert>
+
+    <update id="updateItemQuantity">
+        UPDATE cart_items
+        SET quantity = #{quantity}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteItemById">
+        DELETE FROM cart_items WHERE id = #{id}
+    </delete>
+
+    <delete id="clearItemsByCartId">
+        DELETE FROM cart_items WHERE cart_id = #{cartId}
+    </delete>
+
+    <!-- Page/Search + sort, theo mẫu ProductMapper -->
+    <select id="pageItems" resultMap="CartItemRespResult" parameterType="map">
+        <!-- giữ style __limit/__offset -->
+        <bind name="__limit" value="pageable != null ? pageable.pageSize : (size != null ? size : (limit != null ? limit : 20))"/>
+        <bind name="__offset"
+              value="pageable != null ? pageable.offset
+             : (offset != null ? offset
+                : (page != null &amp;&amp; size != null ? (page - 1) * size : 0))"/>
+
+        SELECT
+        ci.id,
+        ci.product_id,
+        p.name,
+        p.main_image_url,
+        p.price,
+        ci.quantity,
+        (p.price * ci.quantity) AS sub_total
+        FROM cart_items ci
+        JOIN product p ON p.product_id = ci.product_id AND p.is_deleted = 0
+        WHERE ci.cart_id = #{cartId}
+        <if test="q != null and q.trim() != ''">
+            AND p.name ILIKE CONCAT('%', #{q}, '%')
+        </if>
+        ORDER BY
+        <choose>
+            <when test="sortBy == 'name'">p.name</when>
+            <when test="sortBy == 'price'">p.price</when>
+            <when test="sortBy == 'updated_at'">p.updated_at</when>
+            <otherwise>p.created_at</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">ASC</when>
+            <otherwise>DESC</otherwise>
+        </choose>
+        LIMIT #{__limit} OFFSET #{__offset}
+    </select>
+
+    <select id="countPageItems" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM cart_items ci
+        JOIN product p ON p.product_id = ci.product_id AND p.is_deleted = 0
+        WHERE ci.cart_id = #{cartId}
+        <if test="q != null and q.trim() != ''">
+            AND p.name ILIKE CONCAT('%', #{q}, '%')
+        </if>
+    </select>
+
+    <!-- Product lookups -->
+    <select id="getProductStock" parameterType="int" resultType="int">
+        SELECT stock_quantity
+        FROM product
+        WHERE product_id = #{productId} AND is_deleted = 0
+        LIMIT 1
+    </select>
+
+    <select id="existsActiveProduct" parameterType="int" resultType="boolean">
+        SELECT EXISTS (
+        SELECT 1
+        FROM product
+        WHERE product_id = #{productId} AND is_deleted = 0
+        LIMIT 1
+        )
+    </select>
+
+    <!-- Totals -> map theo alias snake_case để auto camelCase -->
+    <select id="computeTotals" parameterType="int"
+            resultType="com.gearx.feature.cart.dto.response.CartTotalsResponse">
+        SELECT
+        COUNT(ci.id)                              AS item_count,
+        COALESCE(SUM(ci.quantity), 0)             AS total_quantity,
+        COALESCE(SUM(ci.quantity * p.price), 0)   AS total_amount
+        FROM cart_items ci
+        JOIN product p ON p.product_id = ci.product_id AND p.is_deleted = 0
+        WHERE ci.cart_id = #{cartId}
+    </select>
+
+    <!-- view 1 item theo id -->
+    <select id="getItemViewById" parameterType="int"
+            resultMap="CartItemRespResult">
+        SELECT
+        ci.id,
+        ci.product_id,
+        p.name,
+        p.main_image_url,
+        p.price,
+        ci.quantity,
+        (p.price * ci.quantity) AS sub_total
+        FROM cart_items ci
+        JOIN product p ON p.product_id = ci.product_id AND p.is_deleted = 0
+        WHERE ci.id = #{itemId}
+        LIMIT 1
+    </select>
+
+</mapper>

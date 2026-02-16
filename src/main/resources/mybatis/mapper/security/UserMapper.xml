@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gearx.security.mapper.UserMapper">
+<mapper namespace="com.gearx.feature.security.mapper.UserMapper">
 
-    <resultMap id="UserResult" type="com.gearx.security.entity.User">
+    <resultMap id="UserResult" type="com.gearx.feature.security.entity.User">
         <id     property="userId"    column="user_id"/>
         <result property="username"  column="username"/>
         <result property="email"     column="email"/>
@@ -20,6 +20,11 @@
         <result property="isActive"  column="is_active"/>
         <result property="isDeleted" column="is_deleted"/>
         <result property="avatarUrl" column="avatar_url"/>
+        <association property="role" javaType="com.gearx.feature.security.entity.Role">
+            <id property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+            <result property="roleCode" column="role_code"/>
+        </association>
     </resultMap>
 
     <delete id="deleteUserById" parameterType="int">
@@ -40,11 +45,15 @@
         created_by,
         updated_at,
         updated_by,
-        is_active,
-        is_deleted,
-        avatar_url
-        FROM public."user"
-        WHERE username = #{username}
+        u.is_active,
+        u.is_deleted,
+        avatar_url,
+        r.role_id,
+        r.role_name,
+        r.role_code
+        FROM public."user" u
+        LEFT JOIN public."role" r ON u.role = r.role_id
+        WHERE u.username = #{username}
         FETCH FIRST 1 ROWS ONLY
     </select>
 
@@ -61,11 +70,15 @@
         created_by,
         updated_at,
         updated_by,
-        is_active,
-        is_deleted,
-        avatar_url
-        FROM public."user"
-        WHERE email = #{email}
+        u.is_active,
+        u.is_deleted,
+        avatar_url,
+        r.role_id,
+        r.role_name,
+        r.role_code
+        FROM public."user" u
+        LEFT JOIN public."role" r ON u.role = r.role_id
+        WHERE u.email = #{email}
         FETCH FIRST 1 ROWS ONLY
     </select>
 
@@ -87,7 +100,7 @@
         SELECT EXISTS(SELECT 1 FROM public."user" WHERE user_id = #{id})
     </select>
 
-    <insert id="insert" parameterType="com.gearx.security.entity.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+    <insert id="insert" parameterType="com.gearx.feature.security.entity.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
         INSERT INTO public."user" (
         username,
         email,
@@ -99,7 +112,8 @@
         updated_by,
         is_active,
         is_deleted,
-        avatar_url
+        avatar_url,
+        "role"
         ) VALUES (
         #{username},
         #{email},
@@ -111,7 +125,8 @@
         #{updatedBy},
         #{isActive},
         0,
-        #{avatarUrl}
+        #{avatarUrl},
+        #{role.roleId}
         )
         RETURNING user_id
     </insert>
@@ -120,7 +135,7 @@
         UPDATE public."user"
         SET password   = #{password},
         updated_at = CURRENT_TIMESTAMP,
-        updated_by = #{updatedBy}
+        updated_by = #{email}
         WHERE user_id = #{userId}
     </update>
 

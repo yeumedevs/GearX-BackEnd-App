@@ -18,7 +18,7 @@
         <result column="stock_quantity"    property="stockQuantity"/>
         <result column="warranty_months"   property="warrantyMonths"/>
         <result column="main_image_url"    property="mainImageUrl"/>
-        <result column="image_urls"        property="imageUrls"    jdbcType="OTHER"/>
+        <result column="image_urls" property="imageUrls"/>
         <result column="is_active"         property="isActive"/>
         <result column="is_deleted"        property="isDeleted"/>
         <result column="created_at"        property="createdAt"/>
@@ -53,8 +53,8 @@
         #{warrantyMonths},
         #{mainImageUrl},
         <choose>
-            <when test="imageUrls != null and imageUrls.size() &gt; 0">
-                ARRAY[<foreach collection="imageUrls" item="u" separator=",">#{u}</foreach>]::text[]
+            <when test="imageUrls != null and imageUrls.trim() != ''">
+                CAST(#{imageUrls} AS jsonb)
             </when>
             <otherwise>NULL</otherwise>
         </choose>,
@@ -89,8 +89,8 @@
         main_image_url = #{mainImageUrl},
         image_urls =
         <choose>
-            <when test="imageUrls != null and imageUrls.size() &gt; 0">
-                ARRAY[<foreach collection="imageUrls" item="u" separator=",">#{u}</foreach>]::text[]
+            <when test="imageUrls != null and imageUrls.trim() != ''">
+                CAST(#{imageUrls} AS jsonb)
             </when>
             <otherwise>NULL</otherwise>
         </choose>,
@@ -124,6 +124,29 @@
         WHERE product_id = #{productId} AND is_deleted = 1
     </update>
 
+    <update id="updateMainImage">
+        UPDATE product
+        SET main_image_url = #{mainImageUrl},
+        updated_at = now(),
+        updated_by = #{updatedBy}
+        WHERE product_id = #{productId} AND is_deleted = 0
+    </update>
+
+    <update id="updateGallery">
+        UPDATE product
+        SET image_urls =
+        image_urls =
+        <choose>
+            <when test="imageUrls != null and imageUrls.trim() != ''">
+                CAST(#{imageUrls} AS jsonb)
+            </when>
+            <otherwise>NULL</otherwise>
+        </choose>,
+        updated_at = now(),
+        updated_by = #{updatedBy}
+        WHERE product_id = #{productId} AND is_deleted = 0
+    </update>
+
     <select id="existsByName" parameterType="string" resultType="boolean">
         SELECT EXISTS(
         SELECT 1 FROM product
@@ -149,7 +172,7 @@
         SELECT
         product_id, name, short_description, description, brand_id, category_id, model,
         attributes, price, compare_at_price, currency_code, stock_quantity,
-        warranty_months, main_image_url, image_urls, is_active, is_deleted,
+        warranty_months, main_image_url, image_urls::text AS image_urls, is_active, is_deleted,
         created_at, created_by, updated_at, updated_by
         FROM product
         <where>
@@ -223,7 +246,7 @@
         SELECT
         product_id, name, short_description, description, brand_id, category_id, model,
         attributes, price, compare_at_price, currency_code, stock_quantity,
-        warranty_months, main_image_url, image_urls, is_active, is_deleted,
+        warranty_months, main_image_url, image_urls::text AS image_urls, is_active, is_deleted,
         created_at, created_by, updated_at, updated_by
         FROM product
         <where>
@@ -287,7 +310,7 @@
         SELECT
         product_id, name, short_description, description, brand_id, category_id, model,
         attributes, price, compare_at_price, currency_code, stock_quantity,
-        warranty_months, main_image_url, image_urls, is_active, is_deleted,
+        warranty_months, main_image_url, image_urls::text AS image_urls, is_active, is_deleted,
         created_at, created_by, updated_at, updated_by
         FROM product
         <where>

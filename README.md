@@ -94,4 +94,4 @@ Dự án thuộc sở hữu **yeumedevs**. Hiện tại chưa có gì, xài gì 
 
 ---
 
-Anh có muốn em viết thêm **Migration script PostgreSQL (bảng user, product, token)** để khi clone về chạy luôn không cần nhập tay hong?
+README này tôi kêu chatgpt viết, nếu bạn đọc tới đây thì có lẽ bạn cũng rảnh phết

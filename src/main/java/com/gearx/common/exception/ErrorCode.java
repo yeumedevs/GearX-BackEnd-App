@@ -18,16 +18,6 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND("2000", "Không tìm thấy sản phẩm"),
     PRODUCT_EXISTED("2000", "Sản phẩm đã tồn tại"),
     PRODUCT_EMPTY("2000", "Không có sản phẩm tồn tại"),
-    BRAND_NOT_FOUND("2000", "Không tìm thấy thương hiệu"),
-    BRAND_EXISTED("2000", "Thương hiệu đã tồn tại"),
-    BRAND_EMPTY("2000", "Không có thương hiệu tồn tại"),
-    COLOR_NOT_FOUND("2000", "Không tìm thấy màu sắc"),
-    COLOR_EXISTED("2000", "Màu sắc đã tồn tại"),
-    COLOR_EMPTY("2000", "Không có màu sắc tồn tại"),
-    MADE_FROM_NOT_FOUND("2000", "Không tìm thấy xuất xứ"),
-    MADE_FROM_EXISTED("2000", "Xuất xứ đã tồn tại"),
-    MADE_FROM_EMPTY("2000", "Không có xuất xứ tồn tại"),
-
 
     // =========== SYSTEM ============
     BAD_SQL("1001", "Sai câu lệnh SQL"),

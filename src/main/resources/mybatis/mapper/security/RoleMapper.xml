@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gearx.security.mapper.RoleMapper">
+<mapper namespace="com.gearx.feature.security.mapper.RoleMapper">
 
-    <resultMap id="RoleResult" type="com.gearx.security.entity.Role">
+    <resultMap id="RoleResult" type="com.gearx.feature.security.entity.Role">
         <id     column="role_id"    property="roleId"/>
         <result column="role_code"  property="roleCode"/>
         <result column="role_name"  property="roleName"/>
@@ -20,8 +20,8 @@
         r.priority,
         r.is_active
         FROM role r
-        JOIN user_role ur ON ur.role_id = r.role_id
-        WHERE ur.user_id = #{userId}
+        JOIN user u ON u.role = r.role_id
+        WHERE u.user_id = #{userId}
     </select>
 
     <select id="findByCode" parameterType="string" resultMap="RoleResult">
@@ -36,17 +36,17 @@
         FETCH FIRST 1 ROWS ONLY
     </select>
 
-    <insert id="insertUserRole">
-        INSERT INTO user_role(user_id, role_id)
-        VALUES (
-        #{userId},
-        #{roleId}
-        )
-    </insert>
+<!--    <insert id="insertUserRole">-->
+<!--        INSERT INTO user_role(user_id, role_id)-->
+<!--        VALUES (-->
+<!--        #{userId},-->
+<!--        #{roleId}-->
+<!--        )-->
+<!--    </insert>-->
 
-    <delete id="deleteUserRoles" parameterType="int">
-        DELETE FROM user_role
-        WHERE user_id = #{userId}
-    </delete>
+<!--    <delete id="deleteUserRoles" parameterType="int">-->
+<!--        DELETE FROM user_role-->
+<!--        WHERE user_id = #{userId}-->
+<!--    </delete>-->
 
 </mapper>

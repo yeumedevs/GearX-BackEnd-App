@@ -2,7 +2,7 @@ package com.gearx.feature.product.dto.response;
 
 import java.math.BigDecimal;
 
-import com.gearx.common.model.BaseEntity;
+import com.gearx.common.base.model.BaseEntity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

@@ -35,6 +35,14 @@ spring:
       mail.smtp.writetimeout: 5000
   jackson:
     time-zone: Asia/Ho_Chi_Minh
+  output:
+    ansi:
+      enabled: ALWAYS
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
+  folder: ${FOLDER}
 
 jwt:
   secret: ${JWT_SECRET}
@@ -77,3 +85,9 @@ app:
 mybatis:
   config-location: classpath:mybatis/configuration/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/**/*.xml
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true

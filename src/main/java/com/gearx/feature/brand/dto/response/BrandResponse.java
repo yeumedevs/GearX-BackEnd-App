@@ -1,6 +1,6 @@
 package com.gearx.feature.brand.dto.response;
 
-import com.gearx.common.model.BaseEntity;
+import com.gearx.common.base.model.BaseEntity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
