@@ -9,6 +9,7 @@ Dự án được xây dựng bằng **Spring Boot** kết hợp **PostgreSQL** 
 * ✅ Xác thực & lưu session/token với Redis
 * ✅ Quản lý sản phẩm, dịch vụ, đơn hàng
 * ✅ API RESTful cho frontend (Vue/Shadcn-UI)
+* 🥷🏿 Cloudinary để lưu trữ hình ảnh
 
 ---
 
